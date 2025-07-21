@@ -190,9 +190,15 @@ Canonical URL  https://creativecommons.org/licenses/by-nc-sa/4.0/
 
     <br><br><u>Μηνύματα σφάλματος:</u>
     <ul>
-        <li>Σε περίπτωση που εμφανιστεί το μήνυμα "Η όδευση δεν έχει συμπληρωθεί σωστά!", τότε, προφανώς, έχει γίνει κάποιο λάθος στην συμπληρωση της όδευσης.</li>
+        <li>Σε περίπτωση που εμφανιστεί το μήνυμα "Η όδευση δεν έχει συμπληρωθεί σωστά!", τότε υπάρχουν οι εξής πιθανές αιτίες:</li>
+        <dl>
+            <dd>- Κάποια/ες γωνίες θλάσης δεν έχουν τιμή στο [0,400).</dd>
+            <dd>- Κάποια/ές απόσταση/αποστάσεις έχουν τιμή μικρότερη ή ίση του 0.</dd>
+            <dd>- Έχει γίνει κάποιο λάθος στην συμπληρωση της όδευσης.</dd>
+        </dl>
         <li>Σε περίπτωση που εμφανιστεί το μήνυμα "Λάθος όνομα για το αρχείο αποτελεσμάτων!", αυτό σημαίνει ότι το όνομα που ορίστηκε για το αρχείο αποτελεσμάτων είναι κενό</li>
         <li>Σε περίπτωση που εμφανιστεί το μήνυμα "Λάθος όνομα για το αρχείο δεδομένων!", αυτό σημαίνει ότι το όνομα που ορίστηκε για το αρχείο δεδομένων είναι κενό</li>
+        <li>Σε περίπτωση που εμφανιστεί το μήνυμα "!", αυτό σημείναι οτι κάποια γωνία έχει μη επιτρεπόμενη τιμή.</li>
     </ul>
     
     <br><br>Creator (Author): Nikos Ververidis<br>
@@ -283,6 +289,11 @@ Canonical URL  https://creativecommons.org/licenses/by-nc-sa/4.0/
             text-align: left;
             font-family: Generic fonts;
         }
+        input[type=number]::-webkit-inner-spin-button, 
+        input[type=number]::-webkit-outer-spin-button { 
+        -webkit-appearance: none; 
+        margin: 0; 
+        }
     </style>
 
     <script>
@@ -303,8 +314,9 @@ Canonical URL  https://creativecommons.org/licenses/by-nc-sa/4.0/
             }
 
             for (let i=0; i<=7; i++){
-                cells[i].contentEditable = "true";
+                cells[i].contentEditable = "false";
                 cells[0].style = "font-weight: bold;";
+                cells[i].innerHTML = '<input type="text" class="tableInputs" style="font-weight: bold;">';
             }
             
             for (let i=1; i<9; i++){
@@ -657,37 +669,44 @@ Canonical URL  https://creativecommons.org/licenses/by-nc-sa/4.0/
         console.log("-----------------------------------");
 
         //---------check-------------------------
-        let countZerosTh=0;
+        let countNaNTh=0;
+        let thOutOfRange = 0;
         //looping through the array
         for(let i=2;i<th.length-2;i++){
             if(Number.isNaN(th[i])){
-                countZerosTh=countZerosTh+1;
+                countNaNTh=countNaNTh+1;
+            }
+            if((th[i]<0) || (th[i]>=400)){
+                thOutOfRange = 1;
             }
         }
-        let countZerosS=0;
+        let countNaNS=0;
+        let sOutOfRange = 0;
         //looping through the array
         for(let i=2;i<s.length-2;i++){
             if(Number.isNaN(s[i])){
-                countZerosS=countZerosS+1;
+                countNaNS=countNaNS+1;
+            }
+            if(s[i] <= 0){
+                sOutOfRange = 1;
             }
         }
-        let countZerosX=0;
+        let countNaNX=0;
         //looping through the array
         for(let i=2;i<dxg.length-2;i++){
             if(Number.isNaN(dxg[i])){
-                countZerosX=countZerosX+1;
+                countNaNX=countNaNX+1;
             }
         }
-        let countZerosY=0;
+        let countNaNY=0;
         //looping through the array
         for(let i=2;i<dyg.length-2;i++){
             if(Number.isNaN(dyg[i])){
-                countZerosY=countZerosY+1;
+                countNaNY=countNaNY+1;
             }
         }
-
-
-        if ((s.length+1 != th.length) || (xg.length != 4) || (yg.length != 4) || (countZerosX != s.length-1) || (countZerosY != s.length-1) || (countZerosTh != 0) || (countZerosS != 0)){
+        
+        if ((s.length+1 != th.length) || (xg.length != 4) || (yg.length != 4) || (countNaNX != s.length-1) || (countNaNY != s.length-1) || (countNaNTh != 0) || (countNaNS != 0) || (thOutOfRange === 1) || (sOutOfRange === 1)){
             alert("Η όδευση δεν έχει συμπληρωθεί σωστά!");
         }
         else {
