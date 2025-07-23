@@ -10,7 +10,7 @@ Canonical URL  https://creativecommons.org/licenses/by-nc-sa/4.0/
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=2000px, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Επίλυση όδευσης</title>
     <!--<link rel="shortcut icon" type="image/x-icon" href="favicon.ico">-->
 </head>
@@ -22,8 +22,7 @@ Canonical URL  https://creativecommons.org/licenses/by-nc-sa/4.0/
     <!--<li class="right"><a href="instructions.html">Οδηγίες χρήσης</a></li>-->
     </ul>
 
-<div style="padding:20px;margin-top:30px;">
-
+<div id="table-div" style="padding:0 20px; margin-top:70px;">
     <h2>Επίλυση όδευσης</h2>
     <table id="editableTable">
         <thead>
@@ -306,10 +305,17 @@ Canonical URL  https://creativecommons.org/licenses/by-nc-sa/4.0/
 
         ul.topnav li.right {float: right;}
 
-        @media screen and (device-width: 600px) {
+        @media screen and (max-width: 1500px) {
         ul.topnav li.right, 
         ul.topnav li {float: none;}
+        #table-div{
+            width: 1500px;
+            overflow-x: scroll;   
         }
+        ul.topnav li a {padding: 2px 2px;}
+        ul.topnav{width: 100%;}
+        ul.topnav li a{text-align: left;}
+    }
     </style>
 
     <script>
